@@ -8,11 +8,24 @@ from curses import wrapper
 def start_screen(stdscr):
     stdscr.clear()
     stdscr.addstr("Welcome to WPM game!")
-    stdscr.addstr("\nPress any key to continue...")
     stdscr.refresh()
     stdscr.getkey()
 
-    #key = stdscr.getkey()
+def wpm_test(stdscr):
+    target_text = "Hello world this is some text!"
+    current_text = []
+
+    stdscr.clear()
+    stdscr.addstr(target_text)
+
+    while True:
+        key = stdscr.getkey()
+        current_text.append(key)
+
+        for char in current_text:
+            stdscr.addstr(char, curses.color_pair(1))
+
+    stdscr.refresh()
 
 # Set at screen over the standardoutput screen. Also to be able to restore it afterwards
 def main(stdscr):
@@ -21,5 +34,6 @@ def main(stdscr):
     curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)
 
     start_screen(stdscr)
+    wpm_test(stdscr)
 
 wrapper(main)
