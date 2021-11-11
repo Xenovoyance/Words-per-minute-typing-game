@@ -12,6 +12,8 @@ def start_screen(stdscr):
     stdscr.refresh()
     stdscr.getkey()
 
+    #key = stdscr.getkey()
+
 # Set at screen over the standardoutput screen. Also to be able to restore it afterwards
 def main(stdscr):
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)
