@@ -39,6 +39,8 @@ def wpm_test(stdscr):
         display_text(stdscr, target_text, current_text, wpm)
         stdscr.refresh()
         
+        # If we are done and all characters have been written, we should stop
+
         try:
             key = stdscr.getkey()
         except:
