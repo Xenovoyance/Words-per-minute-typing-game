@@ -1,5 +1,6 @@
 import curses
 from curses import wrapper
+import time
 
 ### This is my take on a great pyhton tutorial made by Tech with Tim,
 ### check out his YT channel at https://www.youtube.com/channel/UC4JX40jDee_tINbkjycV4Sg
@@ -11,21 +12,46 @@ def start_screen(stdscr):
     stdscr.refresh()
     stdscr.getkey()
 
-def wpm_test(stdscr):
-    target_text = "Hello world this is some text!"
-    current_text = []
+def display_text(stdscr, target, current, wpm=0):
+    stdscr.addstr(target)
+    stdscr.addstr(1, 0, f"WPM: {wpm}")
 
-    stdscr.clear()
-    stdscr.addstr(target_text)
+    for i, char in enumerate(current):
+        if target[i] == current[i]: 
+            color_code = 1
+        else:
+            color_code = 2
+        stdscr.addstr(0, i, char, curses.color_pair(color_code))
+
+def wpm_test(stdscr):
+    target_text = "Hello world this is some example text to get a valid result on the words per minute counter!"
+    current_text = []
+    wpm = 0
+    start_time = time.time()
+
+    stdscr.nodelay(True)
 
     while True:
-        key = stdscr.getkey()
-        current_text.append(key)
+        time_elapsed = max(time.time() - start_time, 1)
+        wpm = round(len(current_text) / (time_elapsed / 60) / 5)
 
-        for char in current_text:
-            stdscr.addstr(char, curses.color_pair(1))
+        stdscr.clear()
+        display_text(stdscr, target_text, current_text, wpm)
+        stdscr.refresh()
+        
+        try:
+            key = stdscr.getkey()
+        except:
+            continue
 
-    stdscr.refresh()
+        # ord(key) 27 is the ESC key
+        if ord(key) == 27:
+            break
+        if key in ("KEY_BACKSPACE", "\b", "\x7f"):
+            if len(current_text) > 0:
+                current_text.pop()
+        elif len(current_text) < len(target_text):
+            current_text.append(key)
 
 # Set at screen over the standardoutput screen. Also to be able to restore it afterwards
 def main(stdscr):
@@ -37,3 +63,4 @@ def main(stdscr):
     wpm_test(stdscr)
 
 wrapper(main)
+
