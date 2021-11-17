@@ -1,0 +1,3 @@
+Hello world, this is a short intro string. 
+Trying out some natural language.
+Various words have spelling that can make them harder to spell. 
