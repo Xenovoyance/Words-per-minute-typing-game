@@ -1,3 +1,5 @@
 Hello world, this is a short intro string. 
 Trying out some natural language.
 Various words have spelling that can make them harder to spell. 
+These are not the lines of code you are looking for. 
+Punctuation, can be a source to increased clarity. 
